@@ -7,8 +7,8 @@ pypd.api_key = getpass.getpass("Pagerduty API key:")
 username = raw_input("Zabbix Username:")
 password = getpass.getpass("Zabbix Password:")
 url = "https://monitoracao.stone.com.br:10443"
-hostgroup_filter = "Databases/*/*"
-
+hostgroup_filter = "" # Zabbix hostgroup filtering. Example: "Databases/*/*"
+team_id = "" # Team ID for escalation policy
 
 try:
   zapi = ZabbixAPI(url)
@@ -29,20 +29,29 @@ for hostgroup in zapi.hostgroup.get(output="extend",search={"name":hostgroup_fil
         data={
           "name": '%s' % hostgroup_name_replaced,
           "escalation_rules": [
+#            {
+#              "escalation_delay_in_minutes": 10,
+#              "targets": [
+#                {
+#                  "type": "user",
+#                  "id": "XXXXXX"
+#                },
+#                {
+#                  "type": "user",
+#                  "id": "YYYYYY"
+#                },
+#                {
+#                  "type": "user",
+#                  "id": "ZZZZZZ"
+#                }
+#              ]
+#            },
             {
               "escalation_delay_in_minutes": 10,
               "targets": [
                 {
-                  "type": "user",
-                  "id": "PUIN47U"
-                },
-                {
-                  "type": "user",
-                  "id": "P70Q23R"
-                },
-                {
-                  "type": "user",
-                  "id": "PTKSNPX"
+                  "type": "schedule",
+                  "id": "P9UM4K6" # Command Center N1 Schedule
                 }
               ]
             },
@@ -51,7 +60,7 @@ for hostgroup in zapi.hostgroup.get(output="extend",search={"name":hostgroup_fil
               "targets": [
                 {
                   "type": "schedule",
-                  "id": "P9UM4K6"
+                  "id": "P9T9YUI" # Command Center N2 Schedule
                 }
               ]
             },
@@ -60,16 +69,7 @@ for hostgroup in zapi.hostgroup.get(output="extend",search={"name":hostgroup_fil
               "targets": [
                 {
                   "type": "schedule",
-                  "id": "P9T9YUI"
-                }
-              ]
-            },
-            {
-              "escalation_delay_in_minutes": 10,
-              "targets": [
-                {
-                  "type": "schedule",
-                  "id": "PD6FPJX"
+                  "id": "PD6FPJX" # Command Center N3 Schedule
                 }
               ]
             }
@@ -77,7 +77,7 @@ for hostgroup in zapi.hostgroup.get(output="extend",search={"name":hostgroup_fil
           "num_loops":9,
           "teams": [
             {
-              "id": "PEMLYKI",
+              "id": team_id,
               "type": "team_reference"
             }
           ],          
@@ -122,7 +122,7 @@ for hostgroup in zapi.hostgroup.get(output="extend",search={"name":hostgroup_fil
         data = {
           "type": "generic_events_api_inbound_integration",         
           "vendor": {
-            "id": "PJOGQ4Q",
+            "id": "PJOGQ4Q", # Zabbix vendor
             "type": "vendor_reference"
           }
         }
@@ -147,7 +147,7 @@ for hostgroup in zapi.hostgroup.get(output="extend",search={"name":hostgroup_fil
       zapi.user.addmedia(
         users = [
           {
-            "userid":"7"
+            "userid":"7" # svcservice
           }
         ],
         medias = [
