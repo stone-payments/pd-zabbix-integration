@@ -1,14 +1,14 @@
 # pd-zabbix-integration
-Configures integration between Zabbix actions and Pagerduty
+Python script to configure integration between Zabbix actions and Pagerduty
 
 ## What does this project do?
 For each filtered Zabbix hostgroup:
-* create Pagerduty escalation policy
-* create Pagerduty service
-* create Pagerduty integration key for the service
-* create Zabbix media type
-* configure Zabbix media into zbxservice user (using the integration key)
-* create Zabbix action
+* creates Pagerduty escalation policy
+* creates Pagerduty service
+* creates Pagerduty integration key for the service
+* creates Zabbix media type
+* configures Zabbix media into zbxservice user (using the integration key)
+* creates Zabbix action
 
 ## Dependencies
 This project uses [pypd](https://github.com/PagerDuty/pagerduty-api-python-client) and [pyzabbix](https://github.com/lukecyca/pyzabbix).
