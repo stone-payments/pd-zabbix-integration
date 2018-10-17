@@ -136,7 +136,8 @@ for hostgroup in zapi.hostgroup.get(output="extend",search={"name":hostgroup_fil
       mediatype = zapi.mediatype.create(
         description = "Pagerduty - %s" % hostgroup["name"],
         type = 1,
-        exec_path = "pd-zabbix" 
+        exec_path = "pd-zabbix",
+        exec_params = "{ALERT.SENDTO}\n{ALERT.SUBJECT}\n{ALERT.MESSAGE}\n"
       )
     except Exception, e:
       sys.stderr.write("Caught exception (%s)\n" % e)
